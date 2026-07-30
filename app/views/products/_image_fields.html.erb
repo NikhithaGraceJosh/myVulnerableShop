@@ -1,0 +1,8 @@
+<div class="nested-fields mb-3">
+    <% if f.object.avatar.attached? %>
+        <%= image_tag(url_for(f.object.avatar), :style => "width:100px;height:110px;") %>
+    <% else %>
+        <%= f.file_field :avatar %>
+    <% end %>
+    <%= link_to_remove_association "Remove", f %>
+</div>

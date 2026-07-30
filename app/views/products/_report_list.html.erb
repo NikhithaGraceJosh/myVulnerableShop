@@ -1,0 +1,18 @@
+
+<% if @orders.empty? %>
+
+    <div>
+        No Sales
+    </div>
+<% else %>
+    <% @orders.each do |order| %>
+        <div>
+            <%= order.id %>
+            <%= order.user.name %>
+            <%= order.address.street %>
+            <%= order.address.city %>
+            <%= order.address.zip %>
+        </div>
+
+    <% end %>    
+<% end %>

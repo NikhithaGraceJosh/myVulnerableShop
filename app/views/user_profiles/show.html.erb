@@ -1,0 +1,81 @@
+<div class="fixed-top">
+  <%= render 'partials/header' %>
+</div>
+<div id="user-profiles-show" class="content-top">
+<%= render 'partials/flash'%>
+<div>
+<div class="image-container mx-auto">
+  
+  <div id="my-image">
+ 
+    <% if @user.image.avatar.attached? %>
+      <%= image_tag(url_for(@user.image.avatar), :style => 'float:left')%>
+    <% else %>
+      <%= image_tag("user.png", :style => 'float:left')%>
+    <% end %>
+      <div class="image-overlay">Edit</div>
+    </div>
+ 
+  <%= simple_form_for @user.image, url: @url, local: true do |form| %>
+        
+
+    <%= form.file_field :avatar, id:"file", :style => "display:none" %>
+    <%= form.input :imageable_id, :as => :hidden, :input_html => { :value => @user.id } %>
+    <%= form.input :imageable_type, :as => :hidden, :input_html => { :value => 'User' } %>
+
+            
+  <% end %>
+   <%= javascript_import_module_tag 'user_image_upload' %>
+</div>
+</div>
+<h1 class="text-center">
+  <%=@user.name%>
+</h1>
+    <div class="text-align-center content">
+      
+      <table class="table">
+       
+        <tr>
+          <th>Email:</th>
+          <td><%= @user.email %><td>
+        </tr>
+        <tr>
+          <th>Phone:</th>
+          <td><%= @user.phone %><td>
+        </tr>
+    
+        <tr>
+          <th>Addresses:</th>
+         
+          <td>
+                
+                <% @user.addresses.each_with_index do |address, index| %>
+                  Address <%= index + 1 %>:
+                  <p>
+                    <%= address.street %>
+                    <%= address.city %>
+                    <%= address.zip %>
+                  </p>
+                <% end %>
+              
+              
+          </td>
+        </tr>
+        <%# <tr> %>
+          <%# <th>Passwords</th> %>
+          <%# <td> %>
+            <%#= link_to 'Change Password', edit_user_registration_path, class: "btn btn-link p-1" %> 
+          <%# </td> %>
+        <%# </tr> %>
+      </table>
+    </div>
+    
+    <div class="d-flex justify-content-center">
+    <div>
+      <%= link_to 'Edit Profile', edit_profile_user_profile_path(current_user.id), class: "btn btn-custom m-4" %>
+    </div>
+    <div>
+      <%= link_to 'Change Password', edit_user_registration_path, class: "btn btn-custom m-4" %> 
+    </div>
+    </div>
+  </div>

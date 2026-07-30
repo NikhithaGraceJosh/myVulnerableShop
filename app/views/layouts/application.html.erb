@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Cherries</title>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+   
+    <%= stylesheet_link_tag '//ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/le-frog/jquery-ui.min.css' %>
+    <%= stylesheet_link_tag 'https://cdn.jsdelivr.net/npm/chosen-js@1.8.7/chosen.min.css' %>
+    <%= stylesheet_link_tag 'https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css' %>
+    <%= stylesheet_link_tag 'https://cdn.jsdelivr.net/npm/owl.carousel@2.3.4/dist/assets/owl.carousel.min.css' %>
+    <%= stylesheet_link_tag 'https://cdn.jsdelivr.net/npm/owl.carousel@2.3.4/dist/assets/owl.theme.default.min.css' %>
+
+    <%= javascript_importmap_tags %>
+
+    <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
+
+    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbo-track': 'reload' %>
+  </head>
+
+  <body class="<%= 'home-page' if controller_name == 'welcome' && action_name == 'index' %>">
+  <div class="page-content">
+  <%= yield %>
+  </div>
+
+<footer>
+     <div class="footer-contents">
+       
+        <div class="text-center" style="font-size: 24px;">
+            <%= fa_icon "facebook-square"%>
+            <%= fa_icon "instagram" %>
+            <%= fa_icon "twitter-square" %>
+           
+         </div>
+       
+        </div>
+       
+    </footer>
+    </body>
+    <%= javascript_import_module_tag 'footer' %>
+</html>

@@ -1,0 +1,70 @@
+<div class="row mb-5">
+    <div class="col-md-7">
+    <% @cart.each_with_index do |item, index| %>
+        <div style="border:1px solid lightgrey" class="mb-3 p-2">
+            <div class="row">
+                <%= hidden_field(:id, index, value: item.id) %>
+                <div class="col-md-2">
+                    <%= link_to product_path(item.product) do %>
+                        <%= image_tag(url_for(item.product.images.first.avatar), style: "width:100px;height:100px;object-fit:scale-down") %>
+                    <% end %>
+                </div>
+                <div class="col-md-10">
+                    <div>
+                        <b><%= link_to item.product.name, product_path(item.product), class: "product-link"%></b>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <div>
+                                <%= item.product.details.split(".")[0] %>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                <b>Size</b>
+                                    <select name="<%=index%>[size]" class="form-control  select-size">
+                                        <%= options_for_select({ "Small" => "1" ,"Medium" => "2", "Large"=>"3"}, item.size_id)%>
+                                    </select>
+                                </div>
+                                <div class="col-md-3">
+                                <b>Quantity</b>
+                                    <select name="<%= index %>[quantity]" class="form-control select-quantity">
+                                        <%= options_for_select({ "1" => "1" ,"2" => "2", "3"=>"3","4"=>"4","5"=>"5"}, item.quantity)%>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 text-center my-auto">
+                            <%=fa_icon "eur"%> <%= item.product.price %>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+            <div class="row mt-3">
+                <div class="col text-center">
+                    <%= link_to 'Remove', cart_path(item), data: { turbo_method: :delete, turbo_confirm: 'Do you really want to give it up? :(' }, class: "btn btn-outline-secondary w-100"%>
+                </div>
+                <div class="col">
+                    <%= link_to 'Add to Wishlist', wishlists_path(product_id: item.product.id), data: { turbo_method: :post }, class: "btn btn-outline-secondary w-100"%>
+                </div>
+            </div>
+        </div>
+    <% end %>
+    </div>
+    <div class="col-md-5">
+        <div style="border: 2px dotted #1a6a64;width:fit-content;height:300px" class="px-3 py-3 mx-auto">
+            <div style="font-family:Dancing Script; font-weight:bold;font-size:30px;" class="mb-3">
+                Price List
+            </div>
+
+            <div class="ml-4">
+                <span class="mr-1">Cart Total:</span> <span class="mr-1"><%=fa_icon "eur"%></span><%= @total_price %>
+            </div>
+            <div class="text-center mx-auto proceed-container">
+                <%= link_to "Proceed to Place Order", summary_cart_path(current_user), class: "btn btn-custom" %>
+            </div>
+        </div>
+
+
+    </div>
+</div>

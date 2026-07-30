@@ -1,0 +1,30 @@
+// Place all the styles related to the cart controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+#cart-show{
+    .empty-cart-container{
+        
+        margin-top: 5rem;
+    }
+    .table > tbody > tr > td {
+        vertical-align: middle;
+   }
+   .select{
+    background-color: rgba(174, 252, 249, 0.432);
+    
+    color:black;
+   }
+   .product-link {
+       color:black;
+       &:hover{
+          text-decoration: underline!important;
+       }
+   }
+   .total-bill {
+        font-family: 'Dancing Script';
+        font-size:bold;
+   }
+   .proceed-container {
+    margin-top: 72%;
+   }
+}

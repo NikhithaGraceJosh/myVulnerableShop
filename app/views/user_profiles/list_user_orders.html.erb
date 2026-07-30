@@ -1,0 +1,76 @@
+<div class="fixed-top">
+    <%= render 'partials/header'%>
+</div>
+<div id="list-user-orders" class="content-top">
+    <% if @orders.empty? %>
+       <div class="text-center empty-order-container">
+        <h1>Your Orders</h1>
+        <%=image_tag("empty-order.png", :style => "width:200px;height:200px; margin:20px")%>
+        <p><b>You have no orders yet. :( </b> </p>
+        <div>
+        
+        <%= link_to "Continue Browsing", products_path%>
+        </div>
+    </div>
+    <% else %>
+        <h1 class="sub-caption">Your Orders</h1>
+        <%= render 'partials/flash'%>
+        <% @orders.each_with_index do |order, index| %>
+            <div>
+                
+                <div class="container border mb-2 bg-white">
+                    <div><h6 style="color:grey; margin-top:5px;">Order #<%= @orders.length - index %></h6></div>
+                    <div class="row">
+                        <div class="col-md-7">
+                            <% order.order_items.each do |item| %>
+                                <div class="row m-3">
+                                    <div class="col-md-3">
+                                        <%=image_tag(url_for(item.product.images.first.avatar), :style => "width:150px;height:150px;object-fit:scale-down;")%>
+                                    </div>
+                                    <div class=col-md-9>
+                                        <h6 class="product-name"><%= item.product.name %></h6>
+                                        <h6><%= fa_icon "eur"%><%= item.product.price %></h6>
+                                        <div class="row">
+                                        <div class="col-md-9">
+                                            <%= item.product.details.split(".").first + "."%>
+                                        </div>
+                                        <div class="col-md-3 align-self-center">
+                                            <div><b>Size</b>
+                                            <%= item.size.name %></div>
+                                            <div><b>Quantity</b>
+                                            <%= item.quantity %></div>
+                                        </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            <% end %>
+                        </div>
+                        <div class="col-md-3 align-self-center text-center">
+                      
+                                    <div><b>Deliver To:</b></div>
+                                    <div><%= order.address.street %>, </div>
+                                    <div><%= order.address.city %>, </div>
+                                    <div><%= order.address.zip %>. </div>
+                       
+                        </div>
+                        <div class="col-md-2 align-self-center">
+                            <%= link_to "View More", order_path(order), class: "btn btn-custom"%><br>
+                            <div style="font-size:13px;" class="mt-3">
+                                <b>Order Status</b><br>
+                                <div class="ml-3">
+                                    <% status_name = order.statuses.last&.name || "Awaiting Payment" %>
+                                    <i><%= status_name %></i><br>
+                                    <% if status_name == "Awaiting Payment" %>
+                                        <%= link_to "Click to Pay Now", new_payment_path(order_id: order.id) %>
+                                    <% end %>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div>               
+                
+            </div>
+        <% end %>
+    <% end %>
+</div>

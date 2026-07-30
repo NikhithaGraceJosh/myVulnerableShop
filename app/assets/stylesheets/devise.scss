@@ -1,0 +1,77 @@
+@import 'bootstrap';
+ @import url('https://fonts.googleapis.com/css?family=Dancing+Script:400,700&display=swap');
+
+body{
+    font-family: 'Lato', sans-serif;
+    display: flex;
+    flex-direction: column;
+}
+.page-content {
+    flex: 1 0 auto;
+}
+ footer {
+    flex-shrink: 0;
+	padding:7px;
+    background-color:black;
+    color: white;
+    padding-right: 20px;
+    width: 100%;
+    text-align: center;
+}
+
+footer i {
+  /*display: inline-block;*/
+  border-radius: 60%;
+  background-color: black;
+  padding: 3px;
+  font-size: 20px;
+  bottom:0vh;
+  
+}
+
+footer i:hover {
+	transform: rotate(360deg);
+	transition-duration: 5s;
+}
+
+.content-top {
+    top:80px;
+    position:relative;
+    
+}
+.fixed-top {
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    z-index: 1030;
+}
+.btn-custom {
+    background-color: #1a6461!important;
+    color: white!important;
+    border: 2px solid #1a6461!important;
+    &:hover {
+        border:2px solid #1a6461!important;
+        background-color: white!important;
+        color: #1a6461!important;
+    }
+}
+a:hover {
+    text-decoration: none!important;
+    font-weight: bold;
+    color:black;
+}
+a{
+    color:black;
+}
+.devise-links {
+    color:black;
+    font-family: "Dancing Script";
+    // font-size:20px;
+}
+html {
+    height: 100%;
+}
+body {
+    min-height: 100%;
+}

@@ -1,0 +1,64 @@
+<div class="fixed-top">
+  <%= render 'partials/header'%>
+</div>
+<div class="content-top mx-4" id="product-new">
+  <%= javascript_import_module_tag 'quantity_per_size' %>
+  <%= javascript_import_module_tag 'product-type' %>
+  <% if @product.errors.any? %>
+    <div id="error_explanation" class="alert alert-danger alert-dismissible fade show">
+      <ul>
+        <% @product.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+      <button type="button" class="close" data-bs-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+    </div>
+  <% end %>
+   <h1 style="font-family:Dancing Script;font-weight:bold">New product</h1>
+  <%= simple_form_for @product, :html => {:class => 'form-group'}, local: true do |form| %>
+    
+    <p>
+      <%= form.input :name, label_html: { class: 'fw-bold' }, wrapper_html: { class: 'w-75' }, input_html: { class: 'w-75' } %>
+    </p>
+
+    <p>
+      <%= form.input :details, as: :text, label_html: { class: 'fw-bold' }, wrapper_html: { class: 'w-75' }, input_html: { class: 'w-75' } %>
+    </p>
+
+    <p>
+      <%= form.input :price, label_html: { class: 'fw-bold' }, wrapper_html: { class: 'w-75' }, input_html: { class: 'w-75' } %>
+    </p>
+
+    <div id="size-checkbox" data-existing-stock="<%= @existing_stock.to_json %>">
+        <%= form.input :available_sizes, as: :check_boxes, collection: Size.pluck(:name, :id), :class => 'form-check-input' %>
+
+    </div>
+
+    <p>
+      <%= form.association :gender, selected: 2, input_html: { class: 'w-75', id: "gender-select" } %>
+    </p>
+    <div>
+      <%= form.association :product_type, :collection => @product_type_list, :label_method => :name, selected: @product.product_type || @product_type_list.first, :value_method => :id, input_html: { class: 'w-75', id: "product-type-select" } %>
+    </div>
+         
+    
+  
+    <div class="mb-3">
+      <div><b>Product Images</b></div>
+      <%= form.fields_for :images do |ff| %>
+        <%= render 'image_fields', f: ff %>
+      <% end %>
+    </div>
+    <div>
+      <%= link_to_add_association 'Add Image', form, :images, class: "btn btn-custom m-2 p-1" %>
+    </div>
+
+    <p>
+      <%= form.submit "Submit", :class => "btn btn-custom" %>
+    </p>
+  
+  <% end %>
+  
+</div>

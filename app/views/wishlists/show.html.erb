@@ -1,0 +1,12 @@
+<div class="fixed-top">
+    <%= render 'partials/header' %>
+</div>
+<div id="wishlist-show" class="content-top mx-3">
+    <% @wishlist.each do |w| %>
+        <%= link_to product_path(w.product), class: "text-decoration-none text-reset" do %>
+            <%= image_tag(url_for(w.product.images.first.avatar), style: "width:100px;height:100px;object-fit:scale-down") %>
+            <%= w.product.name %>
+            <%= w.product.details %>
+        <% end %>
+    <% end %>
+</div>

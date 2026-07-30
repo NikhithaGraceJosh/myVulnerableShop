@@ -1,0 +1,38 @@
+<div class="fixed-top">
+    <%= render 'partials/header' %>
+</div>
+<div class="content-top mx-3">
+    <table class="table">
+        <tr>
+            <th>Rank</th>
+            <th>Product id</th>
+            <th>Product name</th>
+            <th>Price</th>
+            <th>Gender</th>
+            <th># of orders</th>
+        </tr>
+        <% @products.each_with_index do |product, index| %>
+            <tr>
+                <td>
+                    #<%= index +1 %>
+                </td>
+                <td>
+                    <%= product.id%>
+                </td>
+                <td>
+                    <%= product.name%>
+                </td>
+                <td>
+                   <%= fa_icon "eur" %> <%= product.price %>
+                </td>
+                <td>
+                    <%= product.gender.name %>
+                </td>
+                <td>
+                    <%= @product_ids[product.id] %>
+                </td>
+            </tr>
+        <% end %>
+    </table>
+    <%= link_to 'Download Stats', stats_products_path(:format => "csv") %>
+</div>

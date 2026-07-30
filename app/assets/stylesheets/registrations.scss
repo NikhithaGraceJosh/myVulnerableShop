@@ -1,0 +1,28 @@
+
+.registration-container{
+    
+    background-size: 100% 100%;
+    
+    display: flex;
+    justify-content: center;
+    h2{
+        color:black;
+        
+        font-family: 'Dancing Script', cursive;
+        font-weight: bold;
+        font-size:40px; 
+    }
+}
+.registration-form{
+   
+    
+    background-color: white;
+    border-radius:0.7%;
+    opacity:0.9;
+    width: 47%;
+    height:100%;
+    margin: 30px;
+   
+    padding:20px;
+    padding-bottom:50px; 
+}

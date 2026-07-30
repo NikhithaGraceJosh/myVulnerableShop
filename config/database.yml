@@ -1,0 +1,19 @@
+default: &default
+  adapter: mysql2
+  encoding: utf8mb4
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  username: rails
+  password: password
+  host: localhost
+
+development:
+  <<: *default
+  database: myVulnerableShop_development
+
+test:
+  <<: *default
+  database: myVulnerableShop_test
+
+production:
+  <<: *default
+  database: myVulnerableShop_production

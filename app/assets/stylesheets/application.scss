@@ -1,0 +1,116 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, or any plugin's
+ * vendor/assets/stylesheets directory can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any other CSS/SCSS
+ * files in this directory. Styles in this file should be added after the last require_* statement.
+ * It is generally better to create a new file per style scope.
+ *
+
+ *= require_self
+ */
+ @import 'bootstrap';
+ @import url('https://fonts.googleapis.com/css?family=Dancing+Script:400,700&display=swap');
+
+@import 'cart';
+
+@import 'js_datepicker';
+@import 'header';
+@import 'orders';
+@import 'products';
+@import 'registrations';
+@import 'welcome';
+@import 'user_profiles';
+@import 'payments';
+
+
+html {
+    height: 100%;
+}
+body{
+    font-family: 'Lato', sans-serif;
+    min-height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+.page-content {
+    flex: 1 0 auto;
+}
+ footer {
+    flex-shrink: 0;
+	padding:7px;
+    background-color:black;
+    color: white;
+    padding-right: 20px;
+    width: 100%;
+    text-align: center;
+}
+// The homepage (welcome#index) keeps its footer in plain document flow,
+// per request — every other page sharing this layout gets the sticky-footer
+// treatment above (footer sits at the viewport bottom when content is short,
+// and scrolls with the page — never overlapping content — when it's long).
+body.home-page {
+    display: block;
+    min-height: 0;
+}
+
+footer i {
+  /*display: inline-block;*/
+  border-radius: 60%;
+  background-color: black;
+  padding: 3px;
+  font-size: 20px;
+  bottom:0vh;
+  
+  
+}
+
+footer i:hover {
+	transform: rotate(360deg);
+	transition-duration: 5s;
+}
+
+.content-top {
+    margin-top:130px;
+    
+    
+}
+.fixed-top {
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    z-index: 1030;
+}
+.btn-custom {
+    background-color: #1a6461!important;
+    color: white!important;
+    border: 2px solid #1a6461!important;
+    a {
+        color:white;
+    }
+    &:hover {
+        border:2px solid #1a6461!important;
+        background-color: white!important;
+        color: #1a6461!important;
+        a {
+            color: #1a6461!important;
+        }
+    }
+}
+
+a:hover {
+    text-decoration: none!important;
+}
+#qloader {
+    z-index: 9;
+    position: absolute;
+    top: 20vh;
+    left: 40%;
+    background: transparent;
+
+}

@@ -1,0 +1,64 @@
+<%= javascript_import_module_tag 'filters' %>
+<%#= javascript_import_module_tag 'lazyload' %>
+
+<div class="fixed-top">
+	<%= render 'partials/header'%>
+</div>
+
+<div id="product-index" class="content-top">
+	<div id = "filter-list" class="ml-4"></div>
+	<div class="content">
+  		<div class=" container-fluid">
+    		<div class="row">
+				<div class="fixed-sidebar col-md-2 ">
+					<div class="d-flex justify-content-between mb-3">
+						<div><h5><b>Filters</h5></b></div>
+						<div id = "clear-filter">Clear all filters</div>
+					</div>
+					<b>Price:</b>
+					<div class="row mb-3">
+						<div class="col">
+						<input type="text" id="min-price-filter" class="form-control" placeholder="Min">
+						</div>
+						<div class="col">
+						<input type="text" id="max-price-filter" class="form-control" placeholder="Max">
+						</div>
+						<%= hidden_field_tag "gender", @gender, class: "gender-name" %>
+						<%= hidden_field_tag "type", @type, class: "type-name" %>
+					</div>
+					<% if params[:gender].nil? or params[:gender].empty? %>
+						<b>Gender</b>
+						<div>
+							<%= collection_radio_buttons(:gender, :gender_names, genders(), :name, :name) do |b| %>
+								<div>
+									<%= b.radio_button(class: 'gender-check') %>
+									<%= b.label %>
+								</div>
+							<% end %>
+						</div>
+					<% end %>
+					
+					<% filter_categories().each_with_index do |filter, index| %>
+          				<b><%= filter.name %></b>
+						<div>
+							<%= collection_check_boxes(:filter, :filter_names, FilterCategory.where(filter_category_id: filter.id), :name, :name) do |b| %>
+								<div>
+									<%= b.check_box(class: 'filter-check') %>
+									<%= b.label %>
+									<% if filter.name == "Color" %>
+										<div style="display:inline-block;width:10px;height:10px;border-radius:50%;border:1px solid black;background-color:<%=b.text%>"></div>
+									<% end %>
+								</div>
+							<% end %>
+						</div>
+					<% end %>
+
+				</div>
+      			<div class="col-md-10 mt-2" id="product-list">
+					<%= render 'product_list' %>
+				</div>
+    		</div>
+  		</div>
+  	</div>
+  	
+</div>

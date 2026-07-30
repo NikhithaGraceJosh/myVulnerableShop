@@ -1,0 +1,36 @@
+# Browser dependencies are pinned to immutable ESM URLs by `bin/importmap pin`.
+# Application modules stay in app/javascript and are served by the asset pipeline.
+pin "application"
+pin "@hotwired/turbo-rails", to: "turbo.min.js"
+pin "@rails/activestorage", to: "activestorage.esm.js"
+pin "add-to-wishlist"
+pin "address-cart"
+pin "filters"
+pin "footer"
+pin "index"
+pin "lazyload"
+pin "multiple-select"
+pin "place-order"
+pin "product-type"
+pin "product_size_button"
+pin "quantity_per_size"
+pin "report_preview"
+pin "stripe_payment"
+pin "update_cart"
+pin "update_order_status"
+pin "user_image_upload"
+
+# Versioned third-party ESM modules. These pins replace the Webpacker/Yarn
+# runtime dependencies without introducing a JavaScript build step.
+pin "jquery", to: "https://ga.jspm.io/npm:jquery@3.7.1/dist/jquery.js"
+pin "jquery-ui-dist", to: "https://ga.jspm.io/npm:jquery-ui-dist@1.13.3/jquery-ui.js"
+pin "chosen-js", to: "https://ga.jspm.io/npm:chosen-js@1.8.7/chosen.jquery.js"
+pin "nouislider", to: "https://ga.jspm.io/npm:nouislider@15.8.1/dist/nouislider.mjs"
+pin "owl.carousel", to: "https://ga.jspm.io/npm:owl.carousel@2.3.4/dist/owl.carousel.js"
+pin "bootstrap", to: "https://ga.jspm.io/npm:bootstrap@5.3.8/dist/js/bootstrap.esm.js"
+pin "@popperjs/core", to: "https://ga.jspm.io/npm:@popperjs/core@2.11.8/lib/index.js"
+pin "cocoon", to: "cocoon.js"
+pin "@hotwired/stimulus", to: "stimulus.min.js"
+pin "@hotwired/stimulus-loading", to: "stimulus-loading.js"
+pin_all_from "app/javascript/controllers", under: "controllers"
+pin "js-datepicker" # @5.18.4

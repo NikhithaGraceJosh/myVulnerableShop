@@ -1,0 +1,165 @@
+<div class="fixed-top">
+	<%= render 'partials/header'%>
+</div>
+<%= javascript_import_module_tag 'add-to-wishlist' %>
+<script src="https://kit.fontawesome.com/33295a8c03.js" crossorigin="anonymous"></script>
+<div id="product-show" class="content-top mb-3">
+<%= render 'partials/flash'%>
+<% if @cart_item.errors.any? %>
+    <div id="error_explanation" class="alert alert-danger alert-dismissible fade show">
+        <% @cart_item.errors.full_messages.each do |msg| %>
+          <div><%= msg %></div>
+        <% end %>
+      <button type="button" class="close" data-bs-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+    </div>
+  <% end %>
+	<%= javascript_import_module_tag 'product_size_button' %>
+	
+	<%= form_tag update_cart_user_profile_path, local: true do |form| %>
+		<div class="container mt-5">
+			<div class="row">
+				<div class="col-md-5">
+					<div id="carouselIndicators" class="carousel slide" data-bs-ride="carousel">
+						<ol class="carousel-indicators">
+							<%  @product.images.each_with_index do |img, index|%>
+								<% if index == 0 %>
+									<li data-bs-target="#carouselIndicators" data-bs-slide-to="0" class="active"></li>
+								<% else %>
+									<li data-bs-target="#carouselIndicators" data-bs-slide-to="<%= index %>"></li>
+								<% end %>
+							<% end %>
+						</ol>
+						<div class="carousel-inner">
+							<% @product.images.each_with_index do |img, index| %>
+								<%if index==0 %>
+		      						<div class="carousel-item active">
+								<% else %>
+									<div class="carousel-item">
+								<% end %>
+									<%= image_tag(url_for(img.avatar), class: "d-block mx-auto") if img.avatar.attached? %>	
+								</div>
+							<% end %>
+		  				</div>
+		  				<a class="carousel-control-prev" href="#carouselIndicators" role="button" data-bs-slide="prev">
+							<span class="carousel-control-prev-icon round-circle-border"></span>
+							<span class="sr-only">Previous</span>
+		  				</a>
+						<a class="carousel-control-next" href="#carouselIndicators" role="button" data-bs-slide="next">
+							<span class="carousel-control-next-icon round-circle-border" ></span>
+							<span class="sr-only">Next</span>
+						</a>
+		  	
+					</div>	
+				</div>
+				<div class="col-md-5 col-md-offset-2 pt-4">
+					<div>
+						<div class="d-flex justify-content-between">
+							<h3><%= @product.name %></h3>
+							<% if current_user.present? && current_user.customer? %>
+								<h3 class="wishlist-wrapper">
+									<i class="heart-icon <%= wishlisted(@product) ? "fas fa-heart wishlisted" : "far fa-heart not-wishlisted"%>"></i> 
+								</h3>
+							<% end %>
+						</div>
+						<h4><b><%= fa_icon "eur"%><span class="ml-1"><%= @product.price %></span></b></h4>
+					</div>
+					<% if user_signed_in? && current_user.admin? %>
+						<div class="container mt-5">
+							<table class="table">
+								<tr>
+									<th>Available Size</th>
+									<th>Stock Quantity</th>
+									<th></th>
+								</tr>
+								<% @product.product_sizes.each do |p_size| %>
+									<tr>
+										<td>
+											<%= p_size.size.name %>
+										</td>
+										<td>
+											<%= p_size.stock_quantity %>
+										</td>
+										<td>
+											<%= link_to 'Destroy', product_size_path(p_size),
+													data: { turbo_method: :delete, turbo_confirm: 'Are you sure?' } %>
+										</td>
+									</tr>
+								<% end %>
+							</table>
+						</div>
+						
+						<div class="mt-3">
+							<h6 class="font-weight-bold">Product Type</h6>
+							<%= @product.product_type.name.singularize if @product.product_type %>
+						</div>
+						<div class="mt-3">
+							<h6 class="font-weight-bold">Tags</h6>
+							<%= @product.tag_list unless @product.tag_list.nil? %>
+						</div>
+					<% else %>
+						<div class="mt-5">
+							<div class="mb-5">
+								<div class="fw-bold">
+									Size:
+								</div>
+								
+								<div class="size row mt-3">
+									<% @sizes.each do |size| %>
+										<div class="col-md-2">
+											<% if ProductSize.exists?(product_id: @product.id, size_id: size) %>
+												<button type="button" id="product-size-<%=size.name%>" data-value=<%= size.id %> class="product-size-button active-size-button"><%= size.name.upcase %></button>
+											<% else %>
+											
+												<button type="button" class="product-size-button disabled-size-button" disabled><%= size.name.upcase %></button>
+											
+											<% end %>
+										</div>
+									<% end %>
+									<%= hidden_field_tag "size_id" %>
+								</div>
+							</div>
+							<div>
+								<div class="fw-bold">
+									Quantity:
+								</div>
+								<div class="col-md-6 mt-3">
+									<select name="quantity" class="form-control w-25 p-0 h-75">
+										<option value=1>1</option>
+										<option value=2>2</option>
+										<option value=3>3</option>
+										<option value=4>4</option>
+										<option value=5>5</option>
+									</select>
+									<div id="avail-quantity" style="color:red;font-family:Dancing Script;"></div>
+								</div>
+							</div>
+						</div>
+					<% end %>
+					
+					<div class="mt-3 mb-5">
+						<h6 class="fw-bold">Product Description</h6>
+						<p><i><%= @product.details %></i></p>
+					</div>
+					<div class="text-center">
+						<% if user_signed_in? && current_user.admin? %>
+							<div class="d-flex justify-content-around mt-5">
+								<div class="btn btn-custom">
+									<%= link_to 'Edit Product', edit_product_path %>
+								</div>
+								<div class="btn btn-custom">
+									<%= link_to 'Edit Product Tags', edit_tag_product_path %>
+								</div>
+							</div>
+						<% else %>
+							<%= submit_tag "Add to Cart", class: "btn btn-custom"%></div>
+						<% end %>
+					</div>
+				</div>
+			</div>
+		</div>
+	<% end %>
+
+</div>
+	

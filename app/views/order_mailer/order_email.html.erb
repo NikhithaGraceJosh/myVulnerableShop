@@ -1,0 +1,42 @@
+
+<h2>Hi <b><%= @user.name %></b>,<br></h2>
+<div style="margin-left:20px">Thankyou for ordering from us. <br></div>
+<div style="margin-left:20px">Your Order Summary is as follows:<br></div>
+<br>
+<% @order.order_items.each do |item| %>
+    <div style="border: 1px solid; margin-bottom:10px; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)">
+        <div style="display:flex; flex-direction:column;justify-content:space-between">
+            <div style="margin-right:20px">
+                <b>Product</b>
+            </div>
+            <div>
+                <%= item.product.name %>
+            </div>
+        </div>
+        <div style="display:flex;flex-direction:column;justify-content:space-between">
+            <div style="margin-right:25px">
+                <b>Size</b>
+            </div>
+            <div>
+                <%= item.size.name %>
+            </div>
+        </div>
+        <div style="display:flex;flex-direction:column;justify-content:space-between">
+            <div style="margin-right:17px">
+                <b>Quantity<b>
+            </div>
+            <div>
+                <%= item.quantity %>
+            </div>
+        </div>
+    </div>
+
+<% end %>
+<br>
+
+<b>Your order will reach you within 7-10 business days.</b>
+<br>
+<br>
+
+Warm wishes,<br>
+<b style="font-style:Apple Chancery, cursive">Cherries.<b>

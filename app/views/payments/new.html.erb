@@ -1,0 +1,40 @@
+<% stripe_enabled = Rails.configuration.stripe[:publishable_key].present? %>
+<% if stripe_enabled %>
+  <script src="https://js.stripe.com/v3/"></script>
+  <%= javascript_import_module_tag 'stripe_payment' %>
+<% end %>
+<div class="fixed-top">
+    <%= render 'partials/header' %>
+</div>
+<div id="payment-new" class="content-top m-3">
+  <%= render 'partials/flash'%>
+  <%= form_tag payments_path, id: 'payment-form' do |form| %>
+    <div class="form">
+      <% if stripe_enabled %>
+        <label for="card-element" class="my-3">
+          Credit or debit card
+        </label>
+        <div id="card-element" class="mb-3" data-stripe-publishable-key="<%= Rails.configuration.stripe[:publishable_key] %>">
+          <!-- A Stripe Element will be inserted here. -->
+        </div>
+
+        <!-- Used to display form errors. -->
+        <div id="card-errors" role="alert"></div>
+      <% else %>
+        <p class="text-muted">
+          Stripe isn't configured, so this app is using a fake payment provider &mdash; clicking "Pay" below
+          will mark the order as paid without charging a card. Set <code>STRIPE_SECRET_KEY</code> and
+          <code>STRIPE_PUBLISHABLE_KEY</code> to enable real Stripe checkout (see README.md).
+        </p>
+      <% end %>
+    </div>
+    <p>
+      <b><%#= form.label :name %><br></b>
+      <%= text_field_tag 'name', params[:name], class: 'form-control w-75' %>
+    </p>
+    <p>
+      <%= hidden_field_tag 'order_id', @order.id %>
+    </p>
+    <button class="btn btn-custom"><span class="mr-2">Pay</span><span class="mr-1"><%= fa_icon "eur"%></span><%= @order.amount %></button>
+  <% end %>
+</div>

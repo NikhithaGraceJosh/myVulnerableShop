@@ -1,0 +1,72 @@
+<div class="fixed-top">
+    <%= render 'partials/header' %>
+</div>
+<div id="cart-summary" class="content-top mx-3 mb-3">
+<%= render 'partials/flash'%>
+ORDER SUMMARY
+    <% @cart.each_with_index do |item, index| %>
+        <div>
+            <%=image_tag(url_for(item.product.images.first.avatar), :style => "width:100px;height:100px;object-fit:scale-down")%>
+            <%= item.product.name %>
+            <%= item.product.price %>
+            <%= item.quantity %>
+            <%= item.size.name %>
+        </div>
+    <% end %>
+    <div class="mt-5">
+        <h5>Deliver to:</h5>
+    </div>
+    <%= form_tag orders_path, local: true do |form| %>
+        <% current_user.addresses.each_with_index do |address,index| %>
+            <div class="ml-5">
+                <b class="mr-5">
+                    <%= radio_button("post", "address", address.id) %> Address <%= index + 1%>
+                </b>
+            
+                <%= address.street %>,
+                <%= address.city %>,
+                <%= address.zip %>.
+            </div>
+        <% end %> 
+        <button type="button" class="btn btn-custom my-2 p-1" data-bs-toggle="modal" data-bs-target="#exampleModal" >Add address</button>
+        <div class="text-center">
+            <%= submit_tag "Confirm Order and Proceed to Payment", class: "btn btn-custom" %>
+        </div>
+    <% end %>
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            
+            <%= form_with scope: :address, id: "new-address-form", url: addresses_path do |form| %>
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">New Address</h5>
+                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div id="errors" style="color:red"></div>
+                    <div class="form-group">
+                        <%= form.label :street%>
+                        <%= form.text_field :street, class: "form-control"%>
+                    </div>
+                    <div class="form-group">
+                        <%= form.label :city %>
+                        <%= form.text_field :city, class: "form-control"%>
+                    </div>
+                    <div class="form-group">
+                        <%= form.label :zip %>
+                        <%= form.text_field :zip, class: "form-control"%>
+                    </div>
+                    
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <%=submit_tag "Add Address", class:"btn btn-custom", id: "add-address-button"%>
+                </div>
+            
+            <% end %>
+        </div>
+    </div>
+</div>
+</div>

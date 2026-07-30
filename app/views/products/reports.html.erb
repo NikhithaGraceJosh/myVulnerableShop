@@ -1,0 +1,15 @@
+<div class="fixed-top">
+	<%= render 'partials/header'%>
+</div>
+<div id="product-reports" class="content-top">
+    <%= render 'partials/flash'%>
+    From
+    <input id="datepicker-start" class="start" autocomplete="off">
+    To
+    <input id="datepicker-end" class="end" autocomplete="off">
+    <button id="generate-preview" class="btn btn-custom">Generate Preview</button>
+    <button id="download-report-later" class="btn btn-custom">Send Me a Mail</button>
+    <div id="report-list">
+    </div> 
+    <%= link_to  "Download Now",  generate_report_products_path(format: 'csv', now: 'true'), id:"download-report-now", data: { "base-href": generate_report_products_path(format: 'csv', now: 'true') }, class:"btn btn-custom m-5", style: "display: none"  %>
+</div>

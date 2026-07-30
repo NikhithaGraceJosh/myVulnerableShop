@@ -1,0 +1,68 @@
+<div class="fixed-top">
+  <%= render 'partials/header'%>
+</div>
+<div class="registration-container content-top">
+<div class="registration-form">
+<h2>Sign up</h2>
+
+<%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+  <%= render "devise/shared/error_messages", resource: resource %>
+
+
+  <div class="field form-group">
+    <%= f.label :name %><br />
+    <%= f.text_field :name, autofocus: true, autocomplete: "name", class: "form-control" %>
+  </div>
+
+
+  <div class="field form-group">
+    <%= f.label :phone %><br />
+    <%= f.number_field :phone, autofocus: true, autocomplete: "phone", class: "form-control" %>
+  </div>
+
+  <div class="field form-group">
+    <%= f.label :email %><br />
+    <%= f.email_field :email, autofocus: true, autocomplete: "email", class:"form-control" %>
+  </div>
+
+  Address
+  
+  <% @user.addresses.build %>
+
+  <%= f.fields_for :addresses do |address| %>
+     <%= render 'address_fields', f: address %>
+  <% end %>
+  
+  <div class="text-left">
+    <%= link_to_add_association 'Add address', f, :addresses, class: "btn btn-custom mb-2 p-1"%>
+  </div>
+  <div class="field form-group">
+    <%= f.label :password %>
+    <% if @minimum_password_length %>
+    <em>(<%= @minimum_password_length %> characters minimum)</em>
+    <% end %><br />
+    <%= f.password_field :password, autocomplete: "new-password", class: "form-control" %>
+  </div>
+
+  <div class="field form-group">
+    <%= f.label :password_confirmation %><br />
+    <%= f.password_field :password_confirmation, autocomplete: "new-password", class: "form-control" %>
+  </div>
+
+  <div class="actions text-center">
+    <% if controller_name == 'omniauth_callbacks'%>
+      <%= f.submit "Continue Sign up", class: "btn btn-custom" %>
+    <% else %>
+      <%= f.submit "Sign up", class: "btn btn-custom" %>
+    <% end %>
+  </div>
+<% end %>
+<div class="text-center mt-5 font-weight-bold" style="font-family: Dancing Script">
+  Already a member?
+</div>
+<div class="text-center">
+  <%= render "devise/shared/links" %>
+</div>
+</div>
+</div>
+</div>

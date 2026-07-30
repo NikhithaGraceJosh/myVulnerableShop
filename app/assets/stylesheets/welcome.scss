@@ -1,0 +1,69 @@
+// Place all the styles related to the welcome controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+#welcome-index{
+    .welcome-content{
+      padding-top: 81px;
+    }
+    .top-container {
+        background-color: #f1f1f1;
+        padding: 30px;
+        text-align: center;
+      }
+  
+      .content {
+        margin-top: 100px;
+        padding: 16px;
+      }
+      
+      .sticky {
+        position: fixed;
+        top: 0;
+        width: 100%;
+      }
+      
+      .sticky + .content {
+        padding-top: 102px;
+      }
+
+    
+    .carousel {
+        width:100%;
+        height: 400px;
+
+    }
+    .carousel-item {
+        width:100%;
+        height: 400px;
+
+    }
+    // Bootstrap shows only .active/.carousel-item-next/.carousel-item-prev items
+    // (display:block) and hides the rest (display:none). A blanket
+    // ".carousel-item.row{display:flex}" would show every slide at once, since row's
+    // negative-margin overlap trick stacks all items on the same spot — so scope the
+    // flex override to exactly the states Bootstrap already shows.
+    .carousel-item.row.active,
+    .carousel-item.row.carousel-item-next,
+    .carousel-item.row.carousel-item-prev {
+        display: flex;
+    }
+    .carousel-caption {
+        color: black;
+        bottom:0;
+
+        top:290px;
+    }
+    h2 a{
+        color:black;
+        &:hover{
+            color:black;
+          
+        }
+    }
+    .carousel-indicator li {
+      width: 30px;
+      height: 3px;
+      border-radius: 0;
+    }
+
+}

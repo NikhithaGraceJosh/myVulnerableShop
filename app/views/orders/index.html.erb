@@ -1,0 +1,80 @@
+<%= javascript_import_module_tag 'update_order_status' %>
+
+<div class="fixed-top">
+  <%= render 'partials/header'%>
+</div>
+<div id="order-index" class="content-top mx-3 ">
+
+  <div class="outer-div">
+    <h1 class="mt-4" style="font-family:Dancing Script;font-weight:bold;">Order Listing</h1>
+    <div class="tabs mt-4">
+  
+      <div class= '<%= "tab-name " + (params[:value] =="all" ? "active" : "") %>'>
+        <%= link_to "All", orders_path(sort: "id", direction: "asc",value: "all"), id: "all", class: "tab-link" %>
+      </div>
+      <% Status.all.each do |status| %>
+        <div class='<%= "tab-name " + (params[:value] == status.name ? "active" : "") %>'>
+          <%= link_to status.name, orders_path(sort: "id", direction: "asc",value: status.name), id: status.name, class: "tab-link" %>
+        </div>
+      <% end %>
+    </div>
+    <table class="table table-hover my-4" style="table-layout:fixed;">
+      <thead>
+        <tr>
+          <th>
+            <%= sortable("Order No.", "id")%>
+            <div class="ml-1 d-inline-block">
+              <div style="height:1px">
+                <%= fa_icon "sort-up", style: params[:sort]=='id' && params[:direction]=='asc' ? "color:black" : "color:lightgrey" %>
+              </div>
+              <div>
+                <%= fa_icon "sort-down", style: params[:sort]=='id' && params[:direction]=='desc' ? "color:black" : "color:lightgrey" %>
+              </div>
+            </div>
+          </th>
+          <th>
+            <%= sortable("User Id", "user_id") %>
+            <div class="ml-1 d-inline-block">
+              <div style="height:1px">
+                <%= fa_icon "sort-up", style: params[:sort]=='user_id' && params[:direction]=='asc' ? "color:black" : "color:lightgrey" %>
+              </div>
+              <div>
+                <%= fa_icon "sort-down", style: params[:sort]=='user_id' && params[:direction]=='desc' ? "color:black" : "color:lightgrey" %>
+              </div>
+            </div>
+          </th>
+          <th>User Name</th>
+          <th>
+            <%= sortable("Order Date", "created_at") %>
+            <div class="ml-1 d-inline-block">
+              <div style="height:1px">
+                <%= fa_icon "sort-up", style: params[:sort]=='created_at' && params[:direction]=='asc' ? "color:black" : "color:lightgrey" %>
+              </div>
+              <div>
+                <%= fa_icon "sort-down", style: params[:sort]=='created_at' && params[:direction]=='desc' ? "color:black" : "color:lightgrey" %>
+              </div>
+          </th>
+          
+          <th>Order Status</th>
+        </tr>
+      </thead>
+    
+      <% @orders.each_with_index do |order, index| %>
+        <tr>
+          <td><%= order.id %></td>
+          <td><%= order.user_id %></td>
+          <td><%= order.user.name %></td>
+          <td><%= order.created_at %>
+          <td>
+             <select name="<%=order.id%>[status]" class="form-control  select-status">
+                <%= options_for_select(Status.all.map(&:name), disabled: admin_disabled_order_status(order), selected: order.statuses.last&.name || "Awaiting Payment") %>
+              </select>
+              
+          </td>
+          <td><%= link_to 'Show', {controller: 'orders', action: 'show', id: order.id}, class: "btn btn-custom" %></td>
+        </tr>
+      <% end %>
+    </table>
+  </div>
+
+</div>

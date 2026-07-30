@@ -1,0 +1,98 @@
+<div class="fixed-top">
+    <%= render 'partials/header' %>
+</div>
+<div id="show" class="content-top mx-5">
+    <% if current_user.admin? %>
+        <h2 class="text-center mt-5 mb-4">Order #<%= @order.id %></h2>
+    <% end %>
+    <div class="container">
+        <div class="row justify-content-between">
+            <div class="col-md-6 shadow-lg p-3 mb-5 bg-white h-100">
+                <% if current_user.admin? %>
+                    <div class="row mb-3"> 
+                        <div class="col-md-5 font-weight-bold">
+                            User id :
+                        </div>
+                        <div class="col-md-7">
+                            <%= @order.user_id %>
+                        </div>
+                    </div>
+                
+                    <div class="row mb-3">
+                        <div class="col-md-5 font-weight-bold">
+                            User name:
+                        </div>
+                        <div class="col-md-7">
+                            <%= @order.user.name %>
+                        </div>
+                    </div>
+                <% end %>
+                <div class="row">
+                    <div class="col-md-5 font-weight-bold">
+                        Order Items
+                    </div>
+                </div>
+                <div class="row">
+                    <table class="table table-borderless text-center">
+                        <tr>
+                            <th></th>
+                            <% if current_user.admin? %>
+                                <th>Prod id</th>
+                            <% end %>
+                            <th>Name</th>
+                            <th>Price</th>
+                            <th>Quantity</th>
+                            <th>Size</th>
+                        </tr>
+                        <% @order.order_items.each do |item| %>
+                            <tr>
+                                <td><%=image_tag(url_for(item.product.images.first.avatar), style: "object-fit:scale-down; width: 100px;height:130px")%></td>
+                                <% if current_user.admin? %>
+                                    <td class="align-middle"><%= item.product.id %></td>
+                                <% end %>
+                                <td class="align-middle"><%= item.product.name %></td>
+                                <td class="text-nowrap align-middle"><%=fa_icon "eur"%> <%= item.product.price %></td>
+                                <td class="align-middle"><%= item.quantity %></td>
+                                <td class="align-middle"><%= item.size.name %></td>
+                            </tr>
+                        <% end %>
+                    </table>
+                </div>
+            </div>
+            <div class="col-md-6 status-content">
+                <h4 style="font-family: Dancing Script;font-weight:bold">Order Status</h4>
+                <div class="justify-content-center mx-5">
+                    <% last_status = @order.statuses.last || Status.find_by(name: "Awaiting Payment") %>
+                    <% @statuses.each do |status| %>
+                        <% if status.id <= last_status.id %>
+                            <div class="outer">
+                                <div class="inner" style="background-color:gold;box-shadow: 0px 0px 30px 20px gold;"></div>
+                            </div>
+                            <div>
+                                <div class="rounded-circle d-inline-block" style="width:10px; height:10px; background-color: gold"></div>
+                            
+                            <% else %>
+                                <div class="outer">
+                                    <div class="inner" style="background-color:black;box-shadow: 0px 0px 30px 20px black;"></div>
+                                </div>
+                                <div>
+                                    <div class="rounded-circle d-inline-block bg-dark" style="width:10px; height:10px;"></div>
+                            <% end %>
+                            <div class="ml-5 d-inline-block">
+                                <%= status.name %>
+                                <% if status.name == "Awaiting Payment" and last_status.name == status.name %>
+                                    <div class="d-inline-block">
+                                        <%= link_to new_payment_path(order_id: @order.id), class: "ml-4 p-1 btn btn-custom" do %>
+                                        <span style="font-size:14px"><b>Pay Now</b> And Get It Home</span>
+                                        <% end %>
+                                    </div>
+                                <% end %>
+                            </div>
+                        </div>
+                    <% end %>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,93 @@
+
+<div class="header" id="myHeader">
+    <nav class="navbar navbar-expand-lg">
+      	<%= link_to 'Cherries', welcome_index_path,  class: "navbar-brand logo-font p-0 m-0" %>
+		<div>
+			<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo02">
+				<span class="navbar-toggler-icon"><%= fa_icon "bars", style: "color:white" %> </span>
+			</button>
+		</div>
+    	<div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+			<div class="navbar-nav w-100 align-items-center gap-2 gap-lg-3">
+				<div class="nav-item">
+					<div class="navbar-links-custom">
+						<%= form_tag(products_path, method: :get) do %>
+							<div class="input-group border border-white">
+								<%= text_field_tag 'search', params[:search], placeholder: 'Search', class: "form-control rounded-0" %>
+								<div class="input-group-append">
+									<%= button_tag :submit, class: "btn" do %>
+										<span style="color:white"><%= fa_icon "search"%></span>
+									<% end %>
+								</div>
+							</div>
+						<% end %>
+					</div>
+				</div>
+
+				<% genders().each do |gender| %>
+					<div class="nav-item dropdown">
+						<%= link_to gender.name, products_filter_path(gender: gender.name, page_size: 8, pagenum: 1), class: "nav-link categ-filter #{params["gender"] == gender.name ? 'font-weight-bold' : 'font-weight-light' }", id: gender.name.to_s+"-filter", data: {turbo: false} %>
+						<div class="dropdown-content">
+							<% gender.product_types.each do |type| %>
+								<%= link_to type.name, products_filter_path(gender: gender.name, type: type.name, page_size: 8, pagenum: 1), data: {turbo: false} %>
+							<% end %>
+						</div>
+					</div>
+				<% end %>
+
+				<% if user_signed_in? && current_user.admin? %>
+					<div class="nav-item">	
+						<%= link_to "Add product", new_product_path, class: " nav-link" %>
+					</div>
+					<div class="nav-item">	
+						<%= link_to "Order listing", orders_path(sort: "id", direction: "asc", value: "all"), class: "nav-item nav-link" %>
+					</div>
+					<div class="nav-item">	
+						<%= link_to "Stats",stats_products_path, class: "nav-item nav-link" %>
+					</div>
+					<div class="nav-item">	
+						<%= link_to "Reports", reports_products_path, class: "nav-item nav-link" %>
+					</div>
+				<% end %>
+			</div>
+			
+				
+			<div>
+
+				<% if user_signed_in? %>
+					<div class="d-flex flex-column account-menu">
+						<span style="font-weight:lighter;">
+							Hey, <%= current_user.name.partition(" ").first %>
+						</span>
+						<li class="nav-item dropdown list-unstyled m-0">
+							<a class="nav-link dropdown-toggle p-0" href="#Gender" id="navbardrop" data-bs-toggle="dropdown" data-bs-display="static">
+								<%= fa_icon "user" %>
+							</a>
+							<div class="dropdown-menu">
+								<%= link_to 'Profile', user_profile_path(current_user), class: "dropdown-item" %>
+								<% if user_signed_in? and !current_user.admin? %>
+									<%= link_to 'Wishlist', wishlist_path(current_user), class: "dropdown-item" %>
+									<%= link_to 'Cart', cart_path(current_user), class: "dropdown-item" %>
+									<%= link_to 'My Orders', list_user_orders_user_profiles_path, class: "dropdown-item" %>
+								<% end %>
+								<%= link_to 'Sign Out', destroy_user_session_path(@user), data: { turbo_method: :delete }, class: "dropdown-item" %>
+							</div>
+						</li>
+					</div>
+				<% elsif !(devise_controller? && action_name == "new" && %w[sessions registrations passwords].include?(controller_name)) %>
+					<div class="d-flex flex-column account-menu ms-auto">
+						<span style="font-weight:lighter;">
+							Login
+						</span>
+						<%= link_to new_user_session_path, class: "nav-item nav-link p-0" do %>
+							<%= fa_icon "user-circle" %>
+						<% end %>
+					</div>
+				<% end %>
+			
+			</div>
+	  	</div>
+	</nav>
+</div>
+	 
+    

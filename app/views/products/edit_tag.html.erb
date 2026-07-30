@@ -1,0 +1,68 @@
+<%= javascript_import_module_tag 'multiple-select' %>
+<div class="fixed-top">
+	<%= render 'partials/header'%>
+</div>
+<div id="edit-tags" class="content-top container">
+    <div class="row">
+        <div class="col-md-5">
+            <div id="carouselIndicators" class="carousel slide" data-bs-ride="carousel">
+                <ol class="carousel-indicators">
+                    <%  @product.images.each_with_index do |img, index|%>
+                        <% if index == 0 %>
+                            <li data-bs-target="#carouselIndicators" data-bs-slide-to="0" class="active"></li>
+                        <% else %>
+                            <li data-bs-target="#carouselIndicators" data-bs-slide-to="<%= index %>"></li>
+                        <% end %>
+                    <% end %>
+                </ol>
+                <div class="carousel-inner">
+                    <% @product.images.each_with_index do |img, index| %>
+                        <%if index==0 %>
+                            <div class="carousel-item active">
+                        <% else %>
+                            <div class="carousel-item">
+                        <% end %>
+                            <%= image_tag(url_for(img.avatar), class: "d-block mx-auto") if img.avatar.attached? %>	
+                        </div>
+                    <% end %>
+                </div>
+                <a class="carousel-control-prev" href="#carouselIndicators" role="button" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon round-circle-border"></span>
+                    <span class="sr-only">Previous</span>
+                </a>
+                <a class="carousel-control-next" href="#carouselIndicators" role="button" data-bs-slide="next">
+                    <span class="carousel-control-next-icon round-circle-border" ></span>
+                    <span class="sr-only">Next</span>
+                </a>
+    
+            </div>	
+        </div>
+        <div class="col-md-7">
+            <h1 style="font-family: Dancing Script; font-weight:bold">Tag Product</h1>
+            <% if @product.product_type.nil? %>
+                <div class="mt-5 text-center" style="font-family:Dancing Script;font-size:20px">
+                <b>Please <%= link_to 'select a product type', edit_product_path %>
+                first to add tags.</b>
+                </div>
+            <% else %>
+                <div class="form-container">
+                    
+                    <%= form_with scope: :product, html: { multipart: true }, :method => :patch, url: update_tag_product_path,  local: true do |form| %>
+                            
+                        <% @filter_categories.each_with_index do |filter, index| %>
+                            <div class="mt-3">
+                                <%= filter.name %>
+                                <div class="mt-1">
+                                    <%= form.select (index.to_s ).to_sym,            options_for_select(FilterCategory.where(filter_category_id: filter.id).pluck(:name), @tag_list), {}, {:class => 'form-control w-75 chosen-select', data:{placeholder: "Product #{filter.name}"}, multiple: filter.multivalued ? true : false} %>
+                                </div>
+                            </div>
+                        <% end %>
+                        <div class="text-center">
+                            <%= form.submit class: "btn btn-custom mt-5"%>
+                        </div>
+                    <% end %>
+                </div>
+            <% end %>
+        </div>
+    </div>
+</div>

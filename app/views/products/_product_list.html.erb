@@ -1,0 +1,36 @@
+ <% if @products.empty? %>
+    <div style="font-family: Dancing Script;" class="text-center mb-5">
+    <h5>Sorry. We have no products that match your filter.</h5>
+    <%= image_tag(url_for("no-results.png"), style: "margin-top:2px;width:100px;height:100px")%>
+    </div>
+<% else %>
+    <div id="qloader" class="myLoader text-center" style="display:none"><%= image_tag(url_for("loader.gif"))%></div>
+    <div class="row product-list-content">
+        
+        <% @products.each do |product| %>
+            <div class="col-6 col-md-3 img-block">
+                <div class="card mb-5">
+                    <%= link_to({ controller: 'products', action: 'show', id: product.id }) do %>
+                        <% unless product.images.empty? %>
+                            <%= image_tag(url_for(product.images.order(id: :desc).first.avatar), :class => "card-img-top p-2") if product.images.order(id: :desc).first.avatar.attached? %>
+                        <% end %>
+                        <div class="card-body">
+                            <h5 class="card-title">
+                                <%= product.name %>
+                            </h5>
+                            <p class="card-text">
+                                <%= fa_icon "eur" %>
+                                <%= product.price %>
+                            </p>
+                        </div>
+                    <% end %>
+                    <% if user_signed_in? && current_user.admin? %>
+                        <p class="text-center">
+                            <%= link_to 'Remove', product_path(product), data: { turbo_method: :delete, turbo_confirm: 'Are you sure?' } %>
+                        </p>
+                    <% end%>
+                </div>
+            </div>
+        <% end %>
+    </div>
+<% end%>					

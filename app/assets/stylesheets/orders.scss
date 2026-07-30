@@ -1,0 +1,86 @@
+// Place all the styles related to the orders controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+#show{
+    td, th
+    {
+        padding:0 15px 0 15px;
+    }
+    .outer {
+        width: 1px;
+        height: 50px;
+        // margin: auto;
+        position: relative;
+        overflow: hidden;
+      }
+      .inner {
+        position: absolute;
+        width:100%;
+        height: 40%;
+        
+        top: 30%;
+        
+      }
+      .status-content {
+          margin-right: 0px!important;
+          padding-left:60px;    
+      }
+      
+    
+}
+#order-index {
+    th{
+        a{
+            color: black;
+            font-weight: bold;
+        }
+        a:hover {
+            text-decoration: none;
+            color: red;
+        }
+        .asc {
+            i .up{
+                color: black;
+            }
+            i .down {
+                color: grey;
+            }
+        }
+        .dsc {
+            i .up{
+                color:grey;
+            }
+            i.down {
+                color: black
+            }
+            
+        }
+    }
+    .tabs {
+        display:flex;
+        justify-content: space-evenly;
+        
+        font-weight: bold;
+        font-family: 'Dancing Script';
+        font-size: 18px;
+        a{
+            color:gold;
+        }
+    }
+    .tab-name {
+        background-color: black;
+        padding: 7px;
+        width: 100%;
+        vertical-align: middle;
+        text-align: center;
+        border: 1px solid black;
+        border-radius: 4px 4px 0px 0px;
+    }
+    .active {
+        border-bottom: none;
+        background-color: white!important;
+        a{
+        color: black!important;
+        }
+    }
+}

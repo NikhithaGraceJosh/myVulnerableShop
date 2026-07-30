@@ -1,0 +1,22 @@
+$("#cart-content").html("<%=escape_javascript ( render partial: '/cart/cart_list') %>");
+
+
+<% if @errors.any? %>
+        <% error_msg = "" %>
+    <% @errors.messages.each do |key, value| %>
+        <% value.each do |v| %>
+            <% error_msg += "<div>#{v}</div>" %>
+
+            
+        <% end %> 
+    <%end%>
+
+    $('#error-explanation').html('<%=escape_javascript(error_msg).html_safe %>')
+    $('#error-explanation').addClass("alert alert-danger alert-dismissible fade show")
+<% else %> 
+    
+    $('#error-explanation').empty()
+    $('#error-explanation').removeClass("alert alert-danger alert-dismissible fade show")
+<% end %>
+
+

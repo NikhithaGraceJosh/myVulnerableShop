@@ -1,0 +1,64 @@
+<div class="fixed-top">
+  <%= render 'partials/header'%>
+</div>
+<div class="content-top mx-4" id="product-edit">
+  <%= javascript_import_module_tag 'quantity_per_size' %>
+  <%= javascript_import_module_tag 'product-type' %>
+ <% if @product.errors.any? %>
+    <div id="error_explanation" class="alert alert-danger alert-dismissible fade show">
+      <ul>
+        <% @product.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>  
+      </ul>
+      <button type="button" class="close" data-bs-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+    </div>
+  <% end %>
+  <h1 style="font-family:Dancing Script;font-weight:bold">Edit product</h1>
+  <%= simple_form_for @product, html: { multipart: true }, :method => :patch, url: product_path,  local: true do |form| %>
+    
+    <div class="form-group">
+      <b><%= form.label :name %></b><br>
+      <%= form.text_field :name, class: "form-control w-75" %>
+    </div>
+  
+    <div class="form-group">
+      <b><%= form.label :details %></b><br>
+      <%= form.text_area :details, class: "form-control w-75" %>
+    </div>
+
+    <div class="form-group">
+      <b><%= form.label :price %></b><br>
+      <%= form.number_field :price, class: "form-control w-75" %>
+    </div>
+
+    <div class="form-group">
+      <label><b>Gender</b></label><br/>
+      <%= form.select :gender_id, Gender.pluck(:name, :id), {}, { :class => 'form-control w-75', id: "gender-select" } %>
+    </div>
+    <div>
+      <%= form.association :product_type, :collection => @product_type_list, :label_method => :name, :value_method => :id, input_html: { class: 'w-75', id: "product-type-select" } %>
+    </div>
+      
+    <div class="form-group" id="size-checkbox" data-existing-stock="<%= @existing_stock.to_json %>">
+        <%= form.input :available_sizes, as: :check_boxes, collection: Size.pluck(:name, :id), :class => 'form-check-input' %>
+    </div>
+    
+    <div class="mb-3">
+      <div><b>Product Images </b></div>
+      <%= form.fields_for :images do |ff| %>
+        <%= render 'image_fields', f: ff %>
+      <% end %>
+    </div>
+    <div>
+      <%= link_to_add_association 'Add Image', form, :images, class: "btn btn-custom m-2 p-1" %> 
+    </div>
+
+    <div class="text-center">
+      <%= form.submit :class => "btn btn-custom mt-5"%>
+    </div>
+  
+  <% end %>
+</div>
