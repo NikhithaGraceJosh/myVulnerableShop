@@ -8,4 +8,4 @@ A set of intentionally vulnerable, CTF-style challenges built into myVulnerableS
 
 ## How to solve a challenge
 
-Each challenge's writeup states its own objective — sometimes a `flag{...}`, sometimes a specific piece of information to uncover (e.g. a valid account email). There's no separate submission system: read the challenge's hints, reproduce the vulnerable behavior against the running app, and check your result against the "Solution" section in that challenge's writeup.
+Each challenge's writeup states its own objective — sometimes a `flag{...}`, sometimes a specific piece of information to uncover (e.g. a valid account email). There's no separate submission system: read the challenge's hints, reproduce the vulnerable behavior against the running app, and compare your result against the writeup in [solutions/](solutions/) once you've got an answer (or you're stuck).

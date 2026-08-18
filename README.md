@@ -1,5 +1,36 @@
 # myVulnerableShop
 
+## Setup
+
+Requirements: Ruby 3.4.5 and a MySQL (or MariaDB) server.
+
+```bash
+git clone <this repo>
+cd myVulnerableShop
+bin/setup
+```
+
+`bin/setup` installs gems, creates the `rails`/`password` MySQL user expected by
+[config/database.yml](config/database.yml) if it doesn't already exist, then prepares
+(creates, migrates, seeds) the development and test databases. It's safe to re-run at
+any time.
+
+Then start the app:
+
+```bash
+bin/dev            # Rails server + Dart Sass watcher (recommended)
+# or
+bin/rails server   # Rails server only
+```
+
+Visit `http://localhost:3000` and sign in with the seeded admin account:
+
+- email: `admin@domain.com`
+- password: `password`
+
+Payments work out of the box without any configuration — see
+[Payments](#payments-stripe-is-optional) below if you want real Stripe checkout.
+
 ## Security challenges
 
 This app ships with intentional vulnerabilities to practice against, CTF-style. See
