@@ -1,5 +1,10 @@
 # myVulnerableShop
 
+## Security challenges
+
+This app ships with intentional vulnerabilities to practice against, CTF-style. See
+[docs/challenges](docs/challenges/README.md) for the list of challenges and their writeups.
+
 ## Payments (Stripe is optional)
 
 By default this app runs without any Stripe account or API keys. Checkout uses a
