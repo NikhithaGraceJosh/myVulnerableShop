@@ -5,6 +5,7 @@ A set of intentionally vulnerable, CTF-style challenges built into myVulnerableS
 | # | Challenge | Category | Difficulty |
 |---|-----------|----------|------------|
 | 1 | [Username Enumeration](01-username-enumeration.md) | Authentication | 🟢 Easy |
+| 2 | [Weak Password Reset Token](02-weak-password-reset-token.md) | Authentication | 🟢 Easy |
 
 ## How to solve a challenge
 

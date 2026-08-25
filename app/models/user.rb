@@ -44,4 +44,19 @@ class User < ApplicationRecord
     @user_roles ||= roles.pluck(:name)
     @user_roles.include? 'customer'
   end
+
+  protected
+
+  # Challenge #2: deliberately weakened, deterministic replacement for
+  # Devise's default cryptographically random reset_password_token.
+  def set_reset_password_token
+    raw = Digest::SHA256.hexdigest(email)
+    enc = Devise.token_generator.digest(self.class, :reset_password_token, raw)
+
+    self.reset_password_token   = enc
+    self.reset_password_sent_at = Time.now.utc
+    save(validate: false)
+
+    raw
+  end
 end
